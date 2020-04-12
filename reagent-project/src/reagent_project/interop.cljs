@@ -51,7 +51,3 @@
   [e]
   (-> (.-target e)
       (.-value)))
-
-(defn sqrt
-  [value]
-  (js/Math.sqrt value))

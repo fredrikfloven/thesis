@@ -37,8 +37,5 @@ return e.target.checked;
 reagent_project.interop.e__GT_value = (function reagent_project$interop$e__GT_value(e){
 return e.target.value;
 });
-reagent_project.interop.sqrt = (function reagent_project$interop$sqrt(value){
-return Math.sqrt(value);
-});
 
 //# sourceMappingURL=reagent_project.interop.js.map

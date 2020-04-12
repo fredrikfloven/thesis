@@ -9,17 +9,12 @@
   [this-component-id last-id]
   (if (= this-component-id last-id)
     [:div {:style (component-style)}
-     (+ this-component-id (deref (subscribe [:shared-value])))]
+     (deref (subscribe [:get-shared-value]))]
     [:div {:style (component-style)}
      ^{:key (inc this-component-id)}
      [form-1-component
       (inc this-component-id)
       last-id]]))
-
-(defn test-component
-  []
-  [:div {:style (component-style)}
-   (deref (subscribe [:shared-value]))])
 
 (defn slider [param value min max step]
   [:input {:type      "range" :value value :min min :max max :step step
@@ -32,8 +27,10 @@
   (* 2 value))
 
 (defn text-and-buttons
-  [components depth]
-  [:div
+  []
+  (let [components (deref (subscribe [:get-components]))
+        depth (deref (subscribe [:get-depth]))]
+  [:div#container-for-buttons
    [:h1 {:style {:text-align "center"}} "Re-Frame Application State Measurement (Independent)"]
 
    [:div {:style {:text-align "center"}} "Components " components]
@@ -52,22 +49,25 @@
 
    [button {:label       "Increment Shared"
             :button-type :filled
-            :on-click    #(dispatch [:increment-shared-value])}]])
+            :on-click    #(dispatch [:increment-shared-value])}]]))
 
-(defn global-state-app
+(defn component-tree
   []
-  (let [[components depth] (vals (deref (subscribe [:state])))
-        component-ids (range 1 (inc (int components)))]
-    [:div#root
-
-     [text-and-buttons components depth]
-
-     (->> (partition-all (int depth) component-ids)
+  (let [[components depth] (vals (deref (subscribe [:get-state])))
+        component-ids (range 1 (inc (int components)))
+        partitionedIds (partition-all (int depth) component-ids)]
+        
+        (doall 
           (map (fn [child-component-ids]
-                 ^{:key (first child-component-ids)}
-                 [form-1-component
-                  (first child-component-ids)
-                  (last child-component-ids)]))
-          (doall)
-          )]
-    ))
+                  ^{:key (first child-component-ids)}
+                  [form-1-component
+                    (first child-component-ids)
+                    (last child-component-ids)]) 
+                partitionedIds))))
+
+(defn root
+  []
+  [:div#root-div
+      [text-and-buttons]
+      (component-tree)
+      ])

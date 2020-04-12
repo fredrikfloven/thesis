@@ -23,25 +23,6 @@
 (def transparent "transparent")
 
 (def font "Intro Cond Arial, Helvetica Neue, sans-serif")
-(def info-text {:color       darkest-grey
-                :display     "block"
-                :font-weight 400
-                :line-height "17px"
-                :margin-top  "4px"
-                :min-height  "15px"})
-
-(def invalid-text {:color       invalid-red
-                   :display     "block"
-                   :font-weight 700
-                   :line-height "17px"
-                   :margin-top  "4px"})
-
-(def form-item-label {:display                "block"
-                      :font-weight            700
-                      :margin-bottom          "0.3rem"
-                      :-webkit-font-smoothing "antialiased"})
-
-
 
 (defn component-style
   []
@@ -52,14 +33,3 @@
    :border-width "3px"
    :width        "97%"
    :text-align   "center"})
-
-(defn wide-style
-  []
-  (merge {:width   "5%"
-          :display "inline-flex"} (component-style)))
-
-(defn leaf-style
-  []
-  (merge {:padding      "5px"
-          :margin       "auto"} (component-style)))
-
