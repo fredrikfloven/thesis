@@ -1,4 +1,6 @@
 # Repo containing code and measurements for my thesis
+## The thesis
+The thesis *A comparative analysis of run-time performance during singular state updates between global and relative state models in a component-based Single Page Application* may be found at the following link. [link to be added]()
 
 ## Code
 The repo contains two projects, "Reagent-project" and "Re-Frame project".
