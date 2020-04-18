@@ -1,8 +1,11 @@
 (ns reagent-project.main
   (:require
     [reagent.core :refer [render]]
-    [reagent-project.view.app :refer [root]]
-    [reagent-project.interop :refer [get-element-by-id!]]))
+    [reagent-project.view.app :refer [root]]))
+
+(defn get-element-by-id!
+  [id]
+  (js/document.getElementById id))
 
 (defn do-render
   []

@@ -27,10 +27,6 @@
            :on-change (fn [e]
                         (swap! state-atom assoc param (.. e -target -value)))}])
 
-(defn double-up
-  [value]
-  (* 2 value))
-
 (defn text-and-buttons
   [components depth]
   [:div
@@ -40,13 +36,13 @@
    [slider :components (int components) 1 2048 1]
    [button {:label       "Double the components"
             :button-type :filled
-            :on-click    #(swap! state-atom update-in [:components] double-up)}]
+            :on-click    #(swap! state-atom update-in [:components] (* 2 value))}]
 
    [:div {:style {:text-align "center"}} "Depth " depth]
    [slider :depth (int depth) 1 2048 1]
    [button {:label       "Double the depth"
             :button-type :filled
-            :on-click    #(swap! state-atom update-in [:depth] double-up)}]
+            :on-click    #(swap! state-atom update-in [:depth] (* 2 value))}]
 
    [:div {:style {:text-align "center"}} "Affected leaf components: " (int (Math/floor (/ components depth)))]
 
@@ -70,9 +66,6 @@
 (defn root
   []
   (let [[components depth shared-value] (vals (deref state-atom))]
-        
       [:div#root
         [text-and-buttons components depth]
-        (component-tree components depth shared-value)]
-    )
-  )
+        (component-tree components depth shared-value)]))

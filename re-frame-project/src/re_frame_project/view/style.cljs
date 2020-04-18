@@ -52,14 +52,3 @@
    :border-width "3px"
    :width        "97%"
    :text-align   "center"})
-
-(defn wide-style
-  []
-  (merge {:width   "5%"
-          :display "inline-flex"} (component-style)))
-
-(defn leaf-style
-  []
-  (merge {:padding      "5px"
-          :margin       "auto"} (component-style)))
-

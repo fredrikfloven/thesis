@@ -22,10 +22,6 @@
            :on-change (fn [e]
                         (dispatch [:change param (.. e -target -value)]))}])
 
-(defn double-up
-  [value]
-  (* 2 value))
-
 (defn text-and-buttons
   []
   (let [components (deref (subscribe [:get-components]))
@@ -37,13 +33,13 @@
    [slider :components (int components) 1 2048 1]
    [button {:label       "Double components"
             :button-type :filled
-            :on-click    #(dispatch [:double-up :components double-up])}]
+            :on-click    #(dispatch [:double-up :components (* 2 value)])}]
 
    [:div {:style {:text-align "center"}} "Depth " depth]
    [slider :depth (int depth) 1 2048 1]
    [button {:label       "Double depth"
             :button-type :filled
-            :on-click    #(dispatch [:double-up :depth double-up])}]
+            :on-click    #(dispatch [:double-up :depth (* 2 value)])}]
 
    [:div {:style {:text-align "center"}} "Affected leaf components: " (int (Math/floor (/ components depth)))]
 
@@ -52,11 +48,9 @@
             :on-click    #(dispatch [:increment-shared-value])}]]))
 
 (defn component-tree
-  []
-  (let [[components depth] (vals (deref (subscribe [:get-state])))
-        component-ids (range 1 (inc (int components)))
+  [components depth]
+  (let [component-ids (range 1 (inc (int components)))
         partitionedIds (partition-all (int depth) component-ids)]
-        
         (doall 
           (map (fn [child-component-ids]
                   ^{:key (first child-component-ids)}
@@ -67,7 +61,7 @@
 
 (defn root
   []
-  [:div#root-div
-      [text-and-buttons]
-      (component-tree)
-      ])
+  (let [[components depth] (vals (deref (subscribe [:get-state])))]
+    [:div#root-div
+        [text-and-buttons]
+        (component-tree components depth)]))

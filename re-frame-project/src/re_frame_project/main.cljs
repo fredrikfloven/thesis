@@ -3,9 +3,12 @@
    [reagent.core :refer [render]]
    [re-frame.core :refer [dispatch-sync]]
    [re-frame-project.view.app :refer [root]]
-   [re-frame-project.interop :refer [get-element-by-id!]]
    [re-frame-project.query]
    [re-frame-project.event-handlers]))
+
+(defn get-element-by-id!
+  [id]
+  (js/document.getElementById id))
 
 (defn do-render
   []
@@ -16,7 +19,6 @@
   []
   (do-render))
 
-; Entry point
 (defn main!
   []
   (dispatch-sync [:initialize])

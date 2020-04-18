@@ -1,16 +1,12 @@
 (ns re-frame-project.event-handlers
   (:require [re-frame.core :as re-frame]))
 
-
 (re-frame/reg-event-db
   :initialize
   (fn [_ _]
     {:state        {:components   32
                     :depth        32
-                    :shared-value 0}
-     }))
-
-
+                    :shared-value 0}}))
 
 (re-frame/reg-event-db
   :double-up
@@ -26,9 +22,3 @@
   :change
   (fn [db [_ param func]]
     (assoc-in db [:state param] func)))
-
-
-;======================REG-EVENT-FX=======================
-; Effects, mutations outside the db
-
-
